@@ -60,7 +60,11 @@ the Mac App Store).
    rm -rf ~/Applications/"Popup Ad Blocker.app"
    cp -R "/tmp/popup-ad-blocker-build/Build/Products/Release/Popup Ad Blocker.app" ~/Applications/
    open ~/Applications/"Popup Ad Blocker.app"
+   rm -rf /tmp/popup-ad-blocker-build
    ```
+   - The last line deletes the build copy. Every build registers its own copy of the extension
+     with macOS, and leaving it behind means Safari might use a temporary copy instead of the
+     one in Applications.
    - No Apple developer account is needed: the project signs the app to run on your own Mac only.
    - Build outside synced folders such as Desktop or Documents (hence `/tmp`). Otherwise code
      signing can fail with *"resource fork, Finder information, or similar detritus not allowed"*.
