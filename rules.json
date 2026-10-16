@@ -1,0 +1,104 @@
+[
+ {
+  "id": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "adexchangerapid.com",
+    "adsco.re",
+    "ay267.com",
+    "barkequilibrium.com",
+    "bef77.com",
+    "bonuscaf.com",
+    "broomyitys.qpon",
+    "chiripaethenes.com",
+    "cimiermacacos.cyou",
+    "crwdcntrl.net",
+    "daleelerah.info",
+    "dtscdn.com",
+    "dtscout.com",
+    "dtssrv.com",
+    "e19tgpeowj9otr5h.cfd",
+    "es344.com",
+    "eyeota.net",
+    "fentpsyllid.com",
+    "freadiblly.com",
+    "gallaupcoil.cfd",
+    "geniusdexchange.com",
+    "grashugel.com",
+    "hecubawasho.com",
+    "hillscodger.qpon",
+    "histats.com",
+    "ijarwjciakkmj.space",
+    "intellipopup.com",
+    "interlinecustomroofingllc.com",
+    "isaacvargas.com",
+    "istod.com",
+    "itpslot.info",
+    "kettledroopingcontinuation.com",
+    "kirpankinky.cfd",
+    "landwrac.com",
+    "lgj3xbr4o4eh1nic.rest",
+    "mamshirt.com",
+    "mangelcuspids.com",
+    "meatusbyway.cfd",
+    "misradstore.com",
+    "mrktmtrcs.net",
+    "ms-kasey-plcxeqx.work",
+    "nresystems.com",
+    "onaudience.com",
+    "pomponshedersmark.cyou",
+    "protrafficinspector.com",
+    "reedsoutpop.com",
+    "refpa3665.com",
+    "refpa92937.com",
+    "resumessilted.com",
+    "rtmark.net",
+    "runative-syndicate.com",
+    "sculpmaloca.cyou",
+    "skatistantiars.cfd",
+    "spbgc.com",
+    "spendsdetachment.com",
+    "storageimagedisplay.com",
+    "tagivi.com",
+    "triplew.taghas.com",
+    "unsoilcast.qpon",
+    "usrpubtrk.com",
+    "wrigleyctn.cyou",
+    "xml-eu-v4.srvqk3.com",
+    "xml-eu.srvqk3.com",
+    "xml-v4.srvqk3.com"
+   ],
+   "resourceTypes": [
+    "main_frame",
+    "sub_frame",
+    "stylesheet",
+    "script",
+    "image",
+    "font",
+    "object",
+    "xmlhttprequest",
+    "ping",
+    "media",
+    "websocket",
+    "webtransport",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 2,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "regexFilter": "^https?://(1xlite|melbet)-[0-9]+\\.pro/",
+   "resourceTypes": [
+    "main_frame",
+    "sub_frame"
+   ]
+  }
+ }
+]

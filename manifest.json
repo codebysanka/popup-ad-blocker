@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Popup & Ad Blocker",
+  "version": "1.0.0",
+  "description": "Blocks pop-up and pop-under tabs, ad links and ad scripts on the sites you choose, including inside embedded video players.",
+  "permissions": [
+    "declarativeNetRequest",
+    "webNavigation"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "sites.js",
+        "nopopup.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ]
+}
