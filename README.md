@@ -1,10 +1,11 @@
 # Popup & Ad Blocker
 
-A small Chrome / Brave extension (Manifest V3) that stops pop-up and pop-under tabs and blocks ad
-scripts on the websites you choose, including ads that run inside video players embedded in those
-sites.
+A small browser extension (Manifest V3) for **Chrome, Brave and Safari** that stops pop-up and
+pop-under tabs and blocks ad scripts on the websites you choose, including ads that run inside video
+players embedded in those sites.
 
-Tested in **Brave** and **Chrome**. Other Chromium browsers such as Edge, Opera and Vivaldi should
+Tested in **Brave** and **Chrome**. The Safari version builds and installs on macOS (Safari 26);
+see [Safari](#safari-macos) below. Other Chromium browsers such as Edge, Opera and Vivaldi should
 work too, but haven't been tested.
 
 ## What it does
@@ -45,6 +46,44 @@ The browser will warn that the extension can *"read and change all your data on 
 It needs that access because embedded video players come from many different domains. On sites
 that are not in `sites.js` its scripts exit immediately and do nothing.
 
+## Safari (macOS)
+
+Safari extensions must be packaged inside a small Mac app. The Xcode project for it is in
+`safari/`, and it uses the same extension files as Chrome and Brave. You need **Xcode** (free from
+the Mac App Store).
+
+1. **Build the app.** Either open `safari/Popup Ad Blocker/Popup Ad Blocker.xcodeproj` in Xcode and
+   press **Run** (⌘R), or build from Terminal inside the repo folder:
+   ```bash
+   cd "safari/Popup Ad Blocker"
+   xcodebuild -scheme "Popup Ad Blocker" -configuration Release -derivedDataPath /tmp/popup-ad-blocker-build build
+   rm -rf ~/Applications/"Popup Ad Blocker.app"
+   cp -R "/tmp/popup-ad-blocker-build/Build/Products/Release/Popup Ad Blocker.app" ~/Applications/
+   open ~/Applications/"Popup Ad Blocker.app"
+   ```
+   - No Apple developer account is needed: the project signs the app to run on your own Mac only.
+   - Build outside synced folders such as Desktop or Documents (hence `/tmp`). Otherwise code
+     signing can fail with *"resource fork, Finder information, or similar detritus not allowed"*.
+   - Opening the app once is what makes Safari aware of the extension. Keep the app; deleting it
+     removes the extension.
+2. **Allow unsigned extensions.** The app isn't signed with a paid Apple developer certificate,
+   so Safari hides it until you allow unsigned extensions:
+   - Safari → **Settings → Advanced** → tick **Show features for web developers**.
+   - Safari → **Settings → Developer** → tick **Allow unsigned extensions** and enter your password.
+   - Safari turns this setting off every time it quits, so repeat this step after restarting Safari.
+3. **Turn the extension on.** Safari → **Settings → Extensions** → tick **Popup Ad Blocker**.
+4. **Give it website access.** Still in Settings → Extensions, select **Popup Ad Blocker**, click
+   **Edit Websites…** and set **Other Websites** to **Allow**. It has to run inside the embedded
+   video players, which come from many different domains. On sites not in `sites.js` it does
+   nothing.
+
+**Changing `sites.js` for Safari:** the app carries a copy of the extension files, so after editing,
+rebuild and re-copy the app (step 1), then toggle the extension off and on in Safari settings.
+
+How Safari differs: the browser-wide ad-domain list and pop-up blocking work the same. The
+URL-pattern rules apply whenever the page in the address bar is one of your sites, instead of per
+tab.
+
 ## Everyday use
 
 - **Add or remove a site:** edit `sites.js`, then click the **reload arrow** on the extension's card.
@@ -70,8 +109,9 @@ Ad networks rotate their domains, so the lists need occasional refreshing.
 - **URL patterns:** the `PATTERNS` array in `background.js`.
   - Chrome rejects any regular expression bigger than 2 KB once compiled. One rejected rule stops
     *all* of the pattern rules from installing.
-  - Keep repeats short (`{16}`, not `{32}`) and test new patterns in the extension's service-worker
-    console:
+  - Safari rejects `{n}` repeats and `a|b` alternatives. Write `[0-9][0-9]` instead of
+    `[0-9]{2}`, or `'[0-9a-f]'.repeat(16)` in JS, and split alternatives into separate rules.
+  - Test new patterns in the extension's service-worker console (Chrome/Brave):
     ```js
     chrome.declarativeNetRequest.isRegexSupported({ regex: '...', isCaseSensitive: true })
     ```
@@ -86,6 +126,7 @@ Ad networks rotate their domains, so the lists need occasional refreshing.
 | `nopopup.js` | Runs inside the protected pages: blocks `window.open`, cancels ad links, hides ad elements |
 | `background.js` | Turns the URL-pattern rules on for tabs showing a protected site |
 | `rules.json` | Known ad / pop-under / tracker domains, blocked everywhere |
+| `safari/` | Xcode project that packages the same files as a Safari extension app |
 
 ## Limitations
 

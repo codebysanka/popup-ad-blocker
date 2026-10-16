@@ -94,7 +94,20 @@
    "type": "block"
   },
   "condition": {
-   "regexFilter": "^https?://(1xlite|melbet)-[0-9]+\\.pro/",
+   "regexFilter": "^https?://1xlite-[0-9]+\\.pro/",
+   "resourceTypes": [
+    "main_frame",
+    "sub_frame"
+   ]
+  }
+ },
+ {
+  "id": 3,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "regexFilter": "^https?://melbet-[0-9]+\\.pro/",
    "resourceTypes": [
     "main_frame",
     "sub_frame"
