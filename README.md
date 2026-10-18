@@ -13,7 +13,7 @@ work too, but haven't been tested.
 | | Where it applies |
 |---|---|
 | **Stops pop-up and pop-under tabs.** Pages can no longer open new windows with `window.open()`. | Sites in `sites.js`, plus every frame inside them |
-| **Stops "ad link" buttons.** A click on a link that would open a *different* site in a new tab is cancelled. The site's own click handling still runs, so a play button that is secretly an ad link still starts the video. Cmd/Ctrl/Shift-click still open links on purpose. | Sites in `sites.js` |
+| **Stops "ad link" buttons.** A click on a link that would open a *different* site in a new tab is cancelled, including clicks made by scripts on hidden links that were never shown on the page (a common trick inside video players). The site's own click handling still runs, so a play button that is secretly an ad link still starts the video. Cmd/Ctrl/Shift-click still open links on purpose. | Sites in `sites.js` |
 | **Blocks ad scripts by URL pattern.** Catches ad networks that change their domain names every few hours. | Tabs showing a site from `sites.js` |
 | **Blocks known ad, pop-under and tracker domains.** | Every website |
 | **Hides banner slots, fake player buttons and invisible full-page click traps.** | Sites in `sites.js` |

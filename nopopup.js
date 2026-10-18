@@ -31,13 +31,24 @@
     });
 
     const ours = h => h === site || h.endsWith('.' + site) || h === location.hostname;
+    const adLink = a => {
+      if (!a || !a.href || !a.target || /^_(self|top|parent)$/i.test(a.target)) return false;
+      try { return !ours(new URL(a.href, location.href).hostname); } catch { return false; }
+    };
     addEventListener('click', e => {
       if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // deliberate new-tab clicks
-      const link = e.target.closest?.('a[href]');
-      if (!link || !link.target || /^_(self|top|parent)$/i.test(link.target)) return;
-      let h; try { h = new URL(link.href, location.href).hostname; } catch { return; }
-      if (!ours(h)) e.preventDefault();
+      if (adLink(e.target.closest?.('a[href]'))) e.preventDefault();
     }, true);
+    // Ad scripts also click links that were never added to the page (a.click() or a synthetic
+    // click event), so the click above never reaches window. Cancel those at the link itself.
+    const guard = a => { if (adLink(a)) a.addEventListener('click', e => e.preventDefault(), { once: true, capture: true }); };
+    const click = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () { guard(this); return click.call(this); };
+    const dispatch = EventTarget.prototype.dispatchEvent;
+    EventTarget.prototype.dispatchEvent = function (e) {
+      if (this instanceof HTMLAnchorElement && e.type === 'click') guard(this);
+      return dispatch.call(this, e);
+    };
 
     const css = new CSSStyleSheet();
     css.replaceSync(`
